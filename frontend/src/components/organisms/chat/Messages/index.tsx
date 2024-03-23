@@ -106,16 +106,11 @@ const Messages = ({
     []
   );
 
-  return !idToResume &&
-    !messages.length &&
-    projectSettings?.ui.show_readme_as_default ? (
-    <WelcomeScreen
-      variant="app"
-      markdown={projectSettings?.markdown}
-      allowHtml={projectSettings?.features?.unsafe_allow_html}
-      latex={projectSettings?.features?.latex}
-    />
-  ) : (
+  // return !idToResume &&
+  //   !messages.length &&
+  //   projectSettings?.ui.show_readme_as_default ? (
+
+  return (
     <MessageContainer
       avatars={avatars}
       loading={loading}

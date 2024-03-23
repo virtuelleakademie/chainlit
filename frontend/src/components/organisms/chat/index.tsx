@@ -38,7 +38,26 @@ const Chat = () => {
 
   const [autoScroll, setAutoScroll] = useState(true);
   const { error, disabled } = useChatData();
-  const { uploadFile } = useChatInteract();
+  const { uploadFile, addMessage } = useChatInteract();
+
+  addMessage([], {
+    id: '0',
+    threadId: '0',
+    createdAt: new Date().toISOString(),
+    start: new Date().toISOString(),
+    end: new Date().toISOString(),
+    output: 'Initial message!!!',
+    name: 'Chatbot',
+    type: 'assistant_message',
+    language: '',
+    streaming: false,
+    disableFeedback: false,
+    isError: false,
+    waitForAnswer: false,
+    indent: 0,
+    generation: undefined
+  });
+
   const uploadFileRef = useRef(uploadFile);
 
   const fileSpec = useMemo(() => ({ max_size_mb: 500 }), []);

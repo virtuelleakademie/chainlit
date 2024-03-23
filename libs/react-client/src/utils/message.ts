@@ -31,6 +31,7 @@ const isLastMessage = (messages: IStep[], index: number) => {
 // Nested messages utils
 
 const addMessage = (messages: IStep[], message: IStep): IStep[] => {
+  console.log('!!!!!addMessage', { messages, message });
   if (hasMessageById(messages, message.id)) {
     return updateMessageById(messages, message.id, message);
   } else if ('parentId' in message && message.parentId) {

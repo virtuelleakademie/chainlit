@@ -134,7 +134,8 @@ const useChatInteract = () => {
     sendMessage,
     stopTask,
     setIdToResume,
-    updateChatSettings
+    updateChatSettings,
+    addMessage
   };
 };
 
