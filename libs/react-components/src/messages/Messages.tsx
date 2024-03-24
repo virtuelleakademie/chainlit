@@ -87,7 +87,7 @@ würdest du gerne sprechen ? `
       start: new Date().toISOString(),
       end: new Date().toISOString(),
       output: initialMessage ?? '',
-      name: 'Chatbot',
+      name: 'Mentor',
       type: 'assistant_message',
       language: '',
       streaming: false,
