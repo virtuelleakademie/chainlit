@@ -109,12 +109,12 @@ const Message = memo(
                   allowHtml={allowHtml}
                   latex={latex}
                 />
-                {/* <DetailsButton
+                <DetailsButton
                   message={message}
                   opened={showDetails}
                   onClick={() => setShowDetails(!showDetails)}
                   loading={isRunning && isLast}
-                /> */}
+                />
                 {!isRunning && isLast && isAsk && (
                   <AskUploadButton onError={onError} />
                 )}
