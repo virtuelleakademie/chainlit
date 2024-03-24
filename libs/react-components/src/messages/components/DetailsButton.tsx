@@ -59,6 +59,7 @@ const DetailsButton = ({ message, opened, onClick, loading }: Props) => {
 
   return (
     <GreyButton
+      className="details-button"
       size="small"
       id={id}
       sx={{ marginTop: 1 }}
