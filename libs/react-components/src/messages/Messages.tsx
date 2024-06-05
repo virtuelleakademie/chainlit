@@ -27,30 +27,26 @@ const Messages = memo(
       // I've spent hours trying to fix the issue with sending a message on on_chat_start
       // and it just isn't worth it. So here we are. Enjoy this mess!
       const initialMessages = [
-        `Hallo, ich hoffe, es geht dir gut! Ich bin der \
-Chatbot, der dir beim Reflektieren hilft.Was war das \
-Thema deiner letzten Veranstaltung, über das du gerne \
-sprechen möchtest ? `,
-        `Hallo, ich wünsche dir einen schönen Tag! Ich bin der \
-Chatbot, der dich beim Nachdenken unterstützt.Welches \
-war das Thema deiner letzten Veranstaltung, über das du \
-gerne diskutieren möchtest ? `,
-        `Guten Tag, ich hoffe, du fühlst dich wohl! Ich bin \
-der Chatbot, der dir bei der Reflexion zur Seite steht. \
-Über welches Thema deiner letzten Veranstaltung möchtest \
-du sprechen ? `,
-        `Hallo, ich hoffe, alles ist bei dir in Ordnung! Ich \
-bin der Chatbot, der dir beim Überlegen hilft.Welches \
-Thema deiner letzten Veranstaltung möchtest du gerne \
-erörtern ? `,
-        `Hallo, ich hoffe, du bist wohlauf! Ich bin der \
-Chatbot, der dir bei deinen Überlegungen assistiert.Was \
-war das Thema deiner letzten Veranstaltung, über das du \
-gerne reden möchtest ? `,
-        `Guten Tag, ich hoffe, es geht dir gut! Ich \
-bin der Chatbot, der dir bei der Reflexion behilflich \
-ist.Über welches Thema deiner letzten Veranstaltung \
-würdest du gerne sprechen ? `
+        `Hi there! I hope you're doing well. I'm here to assist you with learning techniques. \
+Would you prefer to write in German or English?`,
+        `Hello! I trust all is well with you. I'm available to help you with learning methods. \
+Do you want to write in German or English?`,
+        `Greetings! I hope you're having a great day. I'm here to support you with learning strategies. \
+Which language would you like to use: German or English?`,
+        `Hey! I hope everything is going smoothly for you. I'm ready to assist you with learning techniques. \
+Would you like to write in German or English?`,
+        `Hi! I hope you're having a good day. I'm here to help with learning techniques. \
+Which language would you like to write in: German or English?`,
+        `Hello! I hope all is well with you. I'm here to assist you in learning techniques. \
+Would you prefer to write in German or English?`,
+        `Hi! I hope you're doing great. I'm available to help you with learning techniques. \
+Would you like to write in German or English?`,
+        `Greetings! I hope you're well. I'm here to support your learning process. \
+Which language do you prefer: German or English?`,
+        `Hello! I trust you're doing fine. I'm ready to assist you with learning methods. \
+Would you like to write in German or English?`,
+        `Hey there! I hope everything is going well. I'm here to help you with learning techniques. \
+Do you prefer German or English for writing?`
       ];
       setInitialMessage(
         initialMessages[Math.floor(Math.random() * initialMessages.length)]
