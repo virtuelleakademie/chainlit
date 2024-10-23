@@ -26,6 +26,7 @@ import { projectSettingsState, sideViewState } from 'state/project';
 import Messages from './Messages';
 import DropScreen from './dropScreen';
 import InputBox from './inputBox';
+import { ReturnButton } from './returnButton';
 
 const Chat = () => {
   const { idToResume } = useChatSession();
@@ -236,6 +237,7 @@ const Chat = () => {
             setAutoScroll={setAutoScroll}
             projectSettings={projectSettings}
           />
+          <ReturnButton />
         </ErrorBoundary>
       </SideView>
       {sideViewElement ? null : <TaskList isMobile={false} />}
