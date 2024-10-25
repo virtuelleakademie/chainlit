@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Box, Button } from '@mui/material';
@@ -7,16 +7,20 @@ import { useAuth } from '../../../api/auth';
 
 export const ReturnButton = () => {
   const { user } = useAuth();
-  console.log('!!!user', user);
+
   const returnUrl = user?.metadata?.returnUrl ?? null;
-  const expiresIn = user?.metadata?.exp ?? Date.now() / 1000 + 5000;
-  let timeRemaining = expiresIn * 1000 - Date.now();
-  timeRemaining = timeRemaining < 0 ? 0 : timeRemaining;
-  timeRemaining = Math.round(timeRemaining / 1000);
-  console.log('!!!expiresIn', expiresIn);
-  console.log('!!!timeRemaining', timeRemaining);
-  const secondsRemainingRef = useRef(timeRemaining);
-  const [secondsRemaining, setSecondsRemaining] = useState(timeRemaining);
+
+  const calcSecondsRemaining = useCallback(() => {
+    if (!user?.metadata?.exp) {
+      return null;
+    }
+    const expiresIn = user?.metadata?.exp;
+    let timeRemaining = expiresIn * 1000 - Date.now();
+    timeRemaining = timeRemaining < 0 ? 0 : timeRemaining;
+    return Math.round(timeRemaining / 1000);
+  }, [user]);
+
+  const [secondsRemaining, setSecondsRemaining] = useState(calcSecondsRemaining());
 
   const { t } = useTranslation();
 
@@ -26,19 +30,21 @@ export const ReturnButton = () => {
 
   // Set up an interval to update the countdown every second
   useEffect(() => {
+    if (secondsRemaining === null) {
+      return;
+    }
     if (secondsRemaining <= 0) {
       returnToSurvey();
       return;
     }
     const interval = setInterval(() => {
-      if (secondsRemainingRef.current <= 0) {
+      if (secondsRemaining <= 0) {
         clearInterval(interval); // Clear the interval if time is up
         returnToSurvey();
         return;
       }
-      // Decrease the seconds and update state
-      secondsRemainingRef.current -= 1;
-      setSecondsRemaining(secondsRemainingRef.current);
+
+      setSecondsRemaining(calcSecondsRemaining());
     }, 1000); // Run every second (1000 ms)
 
     // Clean up the interval on component unmount
@@ -46,6 +52,9 @@ export const ReturnButton = () => {
   }, []);
 
   const timerStr = useMemo(() => {
+    if (!secondsRemaining) {
+      return '';
+    }
     const minutes = Math.floor(secondsRemaining / 60);
     const seconds = secondsRemaining % 60;
 
