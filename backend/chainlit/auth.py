@@ -7,6 +7,7 @@ from chainlit.config import config
 from chainlit.data import get_data_layer
 from chainlit.oauth_providers import get_configured_oauth_providers
 from chainlit.user import User
+from dotmap import DotMap
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
@@ -51,12 +52,12 @@ def get_configuration():
 
 
 def create_jwt(data: User) -> str:
+    exp = (datetime.utcnow() + timedelta(minutes=60 * 24 * 15),)  # 15 days default
+    dataDot = DotMap(data.__dict__)
+    if dataDot.metadata.exp:
+        exp = dataDot.metadata.exp
     to_encode = data.to_dict()  # type: Dict[str, Any]
-    to_encode.update(
-        {
-            "exp": datetime.utcnow() + timedelta(minutes=60 * 24 * 15),  # 15 days
-        }
-    )
+    to_encode.update({"exp": exp})
     encoded_jwt = jwt.encode(to_encode, get_jwt_secret(), algorithm="HS256")
     return encoded_jwt
 
