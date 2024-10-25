@@ -55,12 +55,9 @@ export const ReturnButton = () => {
       return;
     }
     const interval = setInterval(() => {
-      console.log('!!!secondsRemaining', secondsRemainingRef.current);
 
       if (Number(secondsRemainingRef.current) === 0) {
-        console.log('!!!CLEARING INTERVAL');
         clearInterval(interval); // Clear the interval if time is up
-        console.log('!!!RETURNING TO SURVEY');
         returnToSurvey();
         return;
       }
