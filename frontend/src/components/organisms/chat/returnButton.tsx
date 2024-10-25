@@ -27,6 +27,7 @@ export const ReturnButton = () => {
   // Set up an interval to update the countdown every second
   useEffect(() => {
     if (secondsRemaining <= 0) {
+      returnToSurvey();
       return;
     }
     const interval = setInterval(() => {
@@ -59,8 +60,8 @@ export const ReturnButton = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Button onClick={returnToSurvey}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+      <Button variant="contained" onClick={returnToSurvey}>
         {t('components.organisms.chat.returnButton', { timer: timerStr })}
       </Button>
     </Box>
