@@ -1,10 +1,11 @@
+import asyncio
 import glob
+import html
 import json
 import mimetypes
 import re
 import shutil
 import urllib.parse
-import asyncio
 from typing import Any, Optional, Union
 
 from chainlit.oauth_providers import get_oauth_provider
@@ -140,9 +141,11 @@ async def lifespan(app: FastAPI):
 def get_build_dir(local_target: str, packaged_target: str):
     local_build_dir = os.path.join(PACKAGE_ROOT, local_target, "dist")
     packaged_build_dir = os.path.join(BACKEND_ROOT, packaged_target, "dist")
-    print ('local_build_dir', local_build_dir)
+    print("local_build_dir", local_build_dir)
 
-    if config.ui.custom_build and os.path.exists(os.path.join(APP_ROOT, config.ui.custom_build, packaged_target, "dist")):
+    if config.ui.custom_build and os.path.exists(
+        os.path.join(APP_ROOT, config.ui.custom_build, packaged_target, "dist")
+    ):
         return os.path.join(APP_ROOT, config.ui.custom_build, packaged_target, "dist")
     elif os.path.exists(local_build_dir):
         return local_build_dir
@@ -224,7 +227,14 @@ def get_html_template(request: Request):
         return body
 
     form = asyncio.run(get_form())
-    jsonFormData = json.dumps(dict(form), indent = 4)
+    # Escape each field in the form dictionary
+    escaped_form = {
+        key: html.escape(value) if isinstance(value, str) else value
+        for key, value in form.items()
+    }
+
+    # Convert the escaped form data to JSON
+    jsonFormData = json.dumps(escaped_form, indent=4)
 
     js = f"""<script>{f"window.theme = {json.dumps(config.ui.theme.to_dict())}; " if config.ui.theme else ""}</script>"""
     js += f"""<script>window.formData = {jsonFormData}; </script>"""
@@ -351,6 +361,7 @@ async def header_auth(request: Request):
         "token_type": "bearer",
     }
 
+
 @app.post("/auth/post")
 async def post_auth(request: Request):
     if not config.code.post_auth_callback:
@@ -378,6 +389,7 @@ async def post_auth(request: Request):
         "access_token": access_token,
         "token_type": "bearer",
     }
+
 
 @app.get("/auth/oauth/{provider_id}")
 async def oauth_login(provider_id: str, request: Request):
